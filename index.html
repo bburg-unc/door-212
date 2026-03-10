@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Background Switcher</title>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 0.2s ease-out;
+      font-family: Arial, sans-serif;
+    }
+
+    #nextBtn {
+      position: fixed;
+      bottom: 10px;   /* ← moved to bottom */
+      left: 10px;     /* ← aligned left */
+      padding: 10px 18px;
+      font-size: 16px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+    #nextBtn:hover {
+      background: rgba(0,0,0,0.75);
+    }
+  </style>
+</head>
+
+<body>
+
+<button id="nextBtn">Next</button>
+
+  <div class="slideshow-container">
+    <div class="slide">
+        <img src="available.png" alt="Slide 1">
+        <div class="caption">Slide 1</div>
+    </div>
+    <div class="slide">
+        <img src="out.png" alt="Slide 2">
+        <div class="caption">Slide 2</div>
+    </div>
+    <div class="slide">
+        <img src="meeting.png" alt="Slide 3">
+        <div class="caption">Slide 3</div>
+    </div>
+    <div class="slide">
+        <img src="closed.png" alt="Slide 4">
+        <div class="caption">Slide 4</div>
+    </div>
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll(".slide");
+
+// Show the first slide initially
+showSlide(currentSlide);
+
+function showSlide(index) {
+    if (index < 0 || index >= slides.length) return; // Prevent invalid index
+    currentSlide = index;
+    slides.forEach(slide => slide.style.display = "none");
+    slides[currentSlide].style.display = "block";
+}
+
+// Listen for number key presses
+document.addEventListener("keydown", function(event) {
+    // Only respond to number keys 1-4
+    if (event.key >= "1" && event.key <= "4") {
+        const slideNumber = parseInt(event.key, 10) - 1; // Convert to zero-based index
+        showSlide(slideNumber);
+    }
+});
+  
+</script>
+
+</body>
+</html>
