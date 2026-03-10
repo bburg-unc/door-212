@@ -1,50 +1,81 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Background Switcher</title>
-
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Slideshow</title>
+<style>
     html, body {
-      height: 100%;
-      margin: 0;
-    }
-    body {
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transition: background-image 0.2s ease-out;
-      font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background: #000;
+        font-family: Arial, sans-serif;
     }
 
-    #nextBtn {
-      position: fixed;
-      bottom: 10px;   /* ← moved to bottom */
-      left: 10px;     /* ← aligned left */
-      padding: 10px 18px;
-      font-size: 16px;
-      border-radius: 6px;
-      background: rgba(0,0,0,0.6);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.3);
-      cursor: pointer;
-      backdrop-filter: blur(4px);
+    .slideshow-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: #000;
     }
-    #nextBtn:hover {
-      background: rgba(0,0,0,0.75);
+
+    .slide {
+        display: none;
+        height: 100%;
+        width: 100%;
+        text-align: center;
     }
-  </style>
+
+    .slide img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .caption {
+        background: rgba(0,0,0,0.6);
+        padding: 8px;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+        color: white;
+    }
+
+    /* Navigation Buttons */
+    .nav-btn {
+        position: absolute;
+        top: 90%;
+        transform: translateY(-50%);
+        background-color: rgba(0,0,0,0.5);
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 4px;
+        user-select: none;
+        z-index: 10;
+    }
+    #prevBtn { left: 10px; }
+    #nextBtn { right: 10px; }
+    .nav-btn:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+</style>
 </head>
-
 <body>
 
-<button id="nextBtn">Next</button>
-
-  <div class="slideshow-container">
+<div class="slideshow-container">
     <div class="slide">
         <img src="available.png" alt="Slide 1">
-        <div class="caption">Slide 1</div>
+        
     </div>
     <div class="slide">
         <img src="out.png" alt="Slide 2">
@@ -60,6 +91,11 @@
     </div>
 </div>
 
+    <!-- Navigation Buttons -->
+    <button id="prevBtn" class="nav-btn">&#10094; Prev</button>
+    <button id="nextBtn" class="nav-btn">Next &#10095;</button>
+</div>
+
 <script>
 let currentSlide = 0;
 const slides = document.querySelectorAll(".slide");
@@ -68,21 +104,35 @@ const slides = document.querySelectorAll(".slide");
 showSlide(currentSlide);
 
 function showSlide(index) {
-    if (index < 0 || index >= slides.length) return; // Prevent invalid index
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
     currentSlide = index;
     slides.forEach(slide => slide.style.display = "none");
     slides[currentSlide].style.display = "block";
 }
 
-// Listen for number key presses
+// Number key navigation (1–4)
 document.addEventListener("keydown", function(event) {
-    // Only respond to number keys 1-4
     if (event.key >= "1" && event.key <= "4") {
-        const slideNumber = parseInt(event.key, 10) - 1; // Convert to zero-based index
-        showSlide(slideNumber);
+        showSlide(parseInt(event.key, 10) - 1);
     }
 });
-  
+
+// Button navigation
+document.getElementById("prevBtn").addEventListener("click", function() {
+    showSlide(currentSlide - 1);
+});
+document.getElementById("nextBtn").addEventListener("click", function() {
+    showSlide(currentSlide + 1);
+});
+
+// Adjust height for mobile Safari address bar changes
+function adjustHeight() {
+    document.querySelector('.slideshow-container').style.height = window.innerHeight + 'px';
+}
+window.addEventListener('resize', adjustHeight);
+window.addEventListener('orientationchange', adjustHeight);
+adjustHeight();
 </script>
 
 </body>
