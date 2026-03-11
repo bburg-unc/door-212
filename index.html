@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Responsive Slideshow</title>
+<title>CHSIT Door</title>
 <style>
     html, body {
         margin: 0;
@@ -37,16 +38,6 @@
         object-fit: contain;
     }
 
-    .caption {
-        background: rgba(0,0,0,0.6);
-        padding: 8px;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        text-align: center;
-        font-size: 1rem;
-        color: white;
-    }
 
     /* Navigation Buttons */
     .nav-btn {
@@ -72,24 +63,26 @@
 </head>
 <body>
 
-<div class="slideshow-container">
+
+  <div class="slideshow-container">
     <div class="slide">
         <img src="available.png" alt="Slide 1">
         
     </div>
     <div class="slide">
-        <img src="out.png" alt="Slide 2">
-        <div class="caption">Slide 2</div>
+        <img src="meeting.png" alt="Slide 2">
+        
     </div>
     <div class="slide">
-        <img src="meeting.png" alt="Slide 3">
-        <div class="caption">Slide 3</div>
+        <img src="out.png" alt="Slide 3">
+        
     </div>
     <div class="slide">
         <img src="closed.png" alt="Slide 4">
-        <div class="caption">Slide 4</div>
+        
     </div>
 </div>
+
 
     <!-- Navigation Buttons -->
     <button id="prevBtn" class="nav-btn">&#10094; Prev</button>
@@ -126,14 +119,10 @@ document.getElementById("nextBtn").addEventListener("click", function() {
     showSlide(currentSlide + 1);
 });
 
-// Adjust height for mobile Safari address bar changes
-function adjustHeight() {
-    document.querySelector('.slideshow-container').style.height = window.innerHeight + 'px';
-}
-window.addEventListener('resize', adjustHeight);
-window.addEventListener('orientationchange', adjustHeight);
-adjustHeight();
+
 </script>
 
 </body>
 </html>
+
+
